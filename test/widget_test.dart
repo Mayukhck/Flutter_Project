@@ -1,30 +1,48 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:first_app/main.dart';
+import 'package:first_app/gradient_container.dart';
+import 'package:first_app/dice_roller.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Test GradientContainer Widget', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: GradientContainer(
+            Color.fromARGB(255, 18, 1, 46),
+            Color.fromARGB(255, 114, 73, 185),
+          ),
+        ),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Find the GradientContainer widget
+    final gradientContainerFinder = find.byType(GradientContainer);
+    expect(gradientContainerFinder, findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Check if GradientContainer contains DiceRoller widget
+    final diceRollerFinder = find.byType(DiceRoller);
+    expect(diceRollerFinder, findsOneWidget);
+  });
+
+  testWidgets('Test DiceRoller Widget', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MaterialApp(home: Scaffold(body: DiceRoller())));
+
+    // Find the DiceRoller widget
+    final diceRollerFinder = find.byType(DiceRoller);
+    expect(diceRollerFinder, findsOneWidget);
+
+    // Find the Roll Dice button
+    final rollDiceButtonFinder = find.text('Roll Dice');
+    expect(rollDiceButtonFinder, findsOneWidget);
+
+    // Tap the Roll Dice button
+    await tester.tap(rollDiceButtonFinder);
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the image updates after rolling the dice
+    expect(find.byType(Image), findsOneWidget);
   });
 }
