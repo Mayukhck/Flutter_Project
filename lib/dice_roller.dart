@@ -23,10 +23,11 @@ class _DiceRollerState extends State<DiceRoller> {
 
   @override
   Widget build(context) {
+    
     return Column(mainAxisSize: MainAxisSize.min, children: [
       Image.asset(
         'assets/images/dice-$currentDiceRoll.png',
-        width: 400,
+        width: 280,
       ),
       const SizedBox(height: 40),
       TextButton(
@@ -34,7 +35,7 @@ class _DiceRollerState extends State<DiceRoller> {
           style: TextButton.styleFrom(
               //padding: const EdgeInsets.only(top: 40),
               foregroundColor: Colors.white,
-              textStyle: const TextStyle(fontSize: 40)),
+              textStyle: const TextStyle(fontSize: 30)),
           child: const Text('Roll Dice'))
     ]);
   }
