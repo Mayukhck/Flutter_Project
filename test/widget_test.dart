@@ -4,8 +4,8 @@ import 'package:first_app/gradient_container.dart';
 import 'package:first_app/dice_roller.dart';
 
 void main() {
-  testWidgets('Test GradientContainer Widget', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('GradientContainer displays correctly', (WidgetTester tester) async {
+    // Build the widget
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -17,13 +17,17 @@ void main() {
       ),
     );
 
-    // Find the GradientContainer widget
-    final gradientContainerFinder = find.byType(GradientContainer);
-    expect(gradientContainerFinder, findsOneWidget);
+    // Verify that GradientContainer is rendered with correct colors
+    final containerFinder = find.byType(Container);
+    expect(containerFinder, findsOneWidget);
+    final containerWidget = tester.widget<Container>(containerFinder);
+    final decoration = containerWidget.decoration as BoxDecoration;
+    expect(decoration.gradient, isInstanceOf<LinearGradient>());
+    final gradient = decoration.gradient as LinearGradient;
+    expect(gradient.colors, equals([const Color.fromARGB(255, 18, 1, 46), const Color.fromARGB(255, 114, 73, 185)]));
 
-    // Check if GradientContainer contains DiceRoller widget
-    final diceRollerFinder = find.byType(DiceRoller);
-    expect(diceRollerFinder, findsOneWidget);
+    // Verify that DiceRoller widget is rendered inside GradientContainer
+    expect(find.byType(DiceRoller), findsOneWidget);
   });
 
   testWidgets('Test DiceRoller Widget', (WidgetTester tester) async {
